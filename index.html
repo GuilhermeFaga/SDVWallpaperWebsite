@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>SDV Wallpaper maker</title>
+</head>
+
+<body>
+    <script>
+        var spacing = "30px"
+        var offset = "-170px"
+        var backgroundColor = "#ffda21"
+
+        var bodyStyle = document.createElement('style')
+        bodyStyle.type = "text/css"
+        bodyStyle.id = "bodyStyle"
+
+        bodyStyle.innerHTML = `body {background-color: ${backgroundColor};}`
+        document.body.appendChild(bodyStyle)
+
+        var images = ["images/Blue_Chicken.png", "images/White_Chicken.png", "images/Brown_Chicken.png"];
+
+        var rowStyle = document.createElement('style')
+        rowStyle.id = "rowStyle"
+        rowStyle.type = "text/css"
+        rowStyle.innerHTML = `.row {margin-bottom: ${spacing};}`
+        document.body.appendChild(rowStyle)
+
+        var rowOddStyle = document.createElement('style')
+        rowOddStyle.id = "rowOddStyle"
+        rowOddStyle.type = "text/css"
+        rowOddStyle.innerHTML = `.odd {margin-left: ${offset};}`
+        document.body.appendChild(rowOddStyle)
+
+        var row = document.createElement("div")
+        row.className = "row"
+        row.id = "row"
+
+        var imgStyle = document.createElement('style')
+        imgStyle.type = "text/css"
+        imgStyle.id = "imgStyle"
+        imgStyle.innerHTML = `.img {margin-right: ${spacing};}`
+        document.body.appendChild(imgStyle)
+
+        var img = document.createElement("img")
+        img.className = "img"
+        img.id = "img"
+
+        for (let i = 0; i < 50; i++) {
+            img.src = images[0]
+            images.push(images.shift())
+            row.appendChild(img.cloneNode(true))
+        }
+
+        for (let i = 0; i < 50; i++) {
+            if (i % 2 == 0) {
+                document.body.appendChild(row.cloneNode(true)).className += " odd"
+            } else {
+                document.body.appendChild(row.cloneNode(true))
+            }
+
+        }
+    </script>
+
+    <div class="config">
+        <div>
+            <a>Horizontal spacing: </a> <a id="hsValue">30</a>
+            <input id="hspacingSlider" type="range" min="1" max="100" value="30" class="slider">
+        </div>
+        <div>
+            <a>Vertical spacing: </a> <a id="vsValue">30</a>
+            <input id="vspacingSlider" type="range" min="1" max="100" value="30" class="slider">
+        </div>
+        <div>
+            <a>Offset: </a> <a id="offsetValue">30</a>
+            <input id="offsetSlider" type="range" min="1" max="200" value="30" class="slider">
+        </div>
+        <div>
+            <a>Background color: </a> <a id="bgValue">#ffda21</a>
+            <input id="bgColor" type="text" value="#ffda21" class="slider">
+        </div>
+    </div>
+
+    <script>
+        var bodyStyle = document.getElementById("bodyStyle")
+        var rowStyle = document.getElementById("rowStyle")
+        var rowOddStyle = document.getElementById("rowOddStyle")
+        var imgStyle = document.getElementById("imgStyle")
+
+        var hspacingSlider = document.getElementById("hspacingSlider");
+        var vspacingSlider = document.getElementById("vspacingSlider");
+        var offsetSlider = document.getElementById("offsetSlider");
+        var bgColor = document.getElementById("bgColor");
+
+        var hsValue = document.getElementById("hsValue");
+        var vsValue = document.getElementById("vsValue");
+        var offsetValue = document.getElementById("offsetValue");
+        var bgValue = document.getElementById("bgValue");
+
+        hspacingSlider.oninput = function () {
+            imgStyle.innerHTML = `.img {margin-right: ${this.value}px;}`
+            hsValue.innerHTML = this.value
+        }
+
+        vspacingSlider.oninput = function () {
+            rowStyle.innerHTML = `.row {margin-bottom: ${this.value}px;}`
+            vsValue.innerHTML = this.value
+        }
+
+        offsetSlider.oninput = function () {
+            rowOddStyle.innerHTML = `.odd {margin-left: ${this.value - 200}px;}`
+            offsetValue.innerHTML = this.value
+        }
+
+        bgColor.onchange = function () {
+            bodyStyle.innerHTML = `body {background-color: ${this.value};}`
+            bgValue.innerHTML = this.value
+        }
+    </script>
+
+</body>
+
+</html>
