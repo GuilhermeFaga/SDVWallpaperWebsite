@@ -63,6 +63,47 @@
             }
 
         }
+        /*
+    get_allimages_by_name.js
+
+    MediaWiki API Demos
+    List all images in the namespace, starting from files that begin with 'Graffiti_000'. Limit the initial response to just the first three images. 
+
+    MIT License
+*/
+
+        // var url = "https://stardewvalleywiki.com/mediawiki/api.php";
+        var url = "https://stardewvalleywiki.com/mediawiki/api.php?action=query&format=json&list=allimages&aifrom=clint&aicontinue&ailimit=500";
+
+        // var params = {
+        //     action: "query",
+        //     format: "json",
+        //     list: "allimages",
+        //     aifrom: "clint",
+        //     ailimit: "10"
+        // };
+
+        // url = url + "?origin=*";
+        // url = url + "&aicontinue";
+        // Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
+
+        const Http = new XMLHttpRequest();
+        Http.open("GET", url);
+        Http.send();
+
+        Http.onreadystatechange = (e) => {
+            console.log(Http.responseText)
+        }
+        
+        fetch(url)
+            .then(function (response) { return response.json(); })
+            .then(function (response) {
+                var images = response.query.allimages;
+                for (var img in images) {
+                    console.log(images[img].title);
+                }
+            })
+            .catch(function (error) { console.log(error); });
     </script>
 
     <div class="config">
